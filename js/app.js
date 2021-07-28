@@ -12,6 +12,16 @@ const contenedorCitas = document.getElementById('citas');
 
 let editando;
 
+window.onload = () => {
+    
+    eventListeners();
+    
+    //Creacion de la BD
+    crearDB();
+    
+
+}
+
 //Clases
 class Citas {
 
@@ -46,7 +56,7 @@ class UI {
         //Agregar clase en base al tipo de error
         if (tipo === 'error') {
 
-            divMensaje.classList.add('alert-danger');
+            divMensaje.classList.add('alert-danger'); 
 
         } else {
 
@@ -55,6 +65,7 @@ class UI {
 
         //Mensaje de Error
         divMensaje.textContent = mensaje;
+                                                       
 
         //Agregar al DOM    
         document.getElementById('contenido').insertBefore(divMensaje, document.querySelector('.agregar-cita'));
@@ -150,7 +161,6 @@ class UI {
 const ui = new UI();
 const administrarCitas = new Citas();
 
-eventListeners();
 function eventListeners() {
 
     //Input -- Event instantanteo al escribir 
@@ -285,4 +295,19 @@ function reiniciarObjeto() {
     citaObj.hora = '';
     citaObj.sintomas = '';
 
+}
+
+function crearDB() {
+
+    //Crear la BD en version 1.0
+    const crearDB = window.indexedDB.open('citas', 1);
+
+    crearDB.onerror = function() {
+
+        console.log('Hubo un error');
+    }
+    crearDB.onsuccess  = function() {
+        
+        console.log('DB creada');
+    }
 }
